@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="551.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorAdministrador">
+   <children>
+      <BorderPane layoutY="-1.0" prefHeight="551.0" prefWidth="1026.0">
+         <top>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b0d083" height="40.0" stroke="BLACK" strokeType="INSIDE" width="1026.0" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <TabPane prefHeight="353.0" prefWidth="1026.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab text="Control de Usuarios">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="506.0" prefWidth="1026.0">
+                           <children>
+                              <Separator layoutX="510.0" layoutY="21.0" orientation="VERTICAL" prefHeight="440.0" prefWidth="3.0" />
+                              <HBox layoutX="535.0" layoutY="57.0" spacing="10.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="Alias:" textAlignment="CENTER" />
+                                    <ComboBox fx:id="aliasModificar" prefHeight="25.0" prefWidth="197.0" />
+                                 </children>
+                              </HBox>
+                              <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registro de Usuario">
+                                 <font>
+                                    <Font name="System Bold" size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="524.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modificar Usuario">
+                                 <font>
+                                    <Font name="System Bold" size="22.0" />
+                                 </font>
+                              </Text>
+                              <VBox layoutX="535.0" layoutY="93.0">
+                                 <children>
+                                    <Label text="Cedula:" />
+                                    <TextField fx:id="cedulaModificar" prefHeight="25.0" prefWidth="182.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="738.0" layoutY="93.0">
+                                 <children>
+                                    <Label text="Nombre y Apellidos" />
+                                    <TextField fx:id="nombreApellidosModificar" prefHeight="25.0" prefWidth="228.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="14.0" layoutY="223.0" />
+                              <VBox layoutX="535.0" layoutY="261.0">
+                                 <children>
+                                    <Label text="Dirección" />
+                                    <TextArea fx:id="direccionModificar" prefHeight="156.0" prefWidth="470.0" />
+                                 </children>
+                              </VBox>
+                              <Text layoutX="535.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfonos">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <HBox layoutX="535.0" layoutY="174.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Nuevo Telefono:" />
+                                    <TextField fx:id="nuevoTelefonoModificar" prefHeight="25.0" prefWidth="180.0" />
+                                    <Button fx:id="agregarTelefonoModificar" mnemonicParsing="false" prefWidth="72.0" text="Agregar" />
+                                 </children>
+                              </HBox>
+                              <ComboBox fx:id="telefonosModificar" layoutX="631.0" layoutY="211.0" prefHeight="25.0" prefWidth="180.0" />
+                              <Label layoutX="535.0" layoutY="215.0" text="Telefonos:" />
+                              <Button fx:id="eliminarTelefonoUsuario" layoutX="907.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Eliminar" />
+                              <HBox layoutX="14.0" layoutY="57.0" spacing="10.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="Alias:" textAlignment="CENTER" />
+                                    <TextField fx:id="aliasRegistro" prefHeight="25.0" prefWidth="199.0" />
+                                 </children>
+                              </HBox>
+                              <VBox layoutX="14.0" layoutY="93.0">
+                                 <children>
+                                    <Label text="Cedula:" />
+                                    <TextField fx:id="cedulaRegistro" prefHeight="25.0" prefWidth="182.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="217.0" layoutY="93.0">
+                                 <children>
+                                    <Label text="Nombre y Apellidos" />
+                                    <TextField fx:id="nombreApellidosRegistro" prefHeight="25.0" prefWidth="228.0" />
+                                 </children>
+                              </VBox>
+                              <Text layoutX="14.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfonos">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <HBox layoutX="14.0" layoutY="174.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Nuevo Telefono:" />
+                                    <TextField fx:id="nuevoTelefonoRegistro" prefHeight="25.0" prefWidth="180.0" />
+                                    <Button fx:id="agregarTelefonoRegistro" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Agregar" />
+                                 </children>
+                              </HBox>
+                              <ComboBox fx:id="telefonosRegistro" layoutX="110.0" layoutY="211.0" prefHeight="25.0" prefWidth="180.0" />
+                              <Label layoutX="14.0" layoutY="215.0" text="Telefonos:" />
+                              <Button fx:id="eliminarTelefonoRegistro" layoutX="302.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Eliminar" />
+                              <Label layoutX="14.0" layoutY="261.0" text="Dirección" />
+                              <TextArea fx:id="direccionRegistro" layoutX="14.0" layoutY="278.0" prefHeight="156.0" prefWidth="470.0" />
+                              <Button fx:id="modificarTelefonoUsuario" layoutX="823.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Modificar" />
+                              <Button fx:id="registrarUsuario" layoutX="21.0" layoutY="446.0" mnemonicParsing="false" text="Registrar" />
+                              <Button fx:id="modificarUsuario" layoutX="536.0" layoutY="446.0" mnemonicParsing="false" text="Aplicar" />
+                              <HBox layoutX="262.0" layoutY="57.0" spacing="10.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="Contraseña" textAlignment="CENTER" />
+                                    <PasswordField fx:id="contrasennaRegistro" />
+                                 </children>
+                              </HBox>
+                              <ComboBox fx:id="tipoUsuario" layoutX="338.0" layoutY="446.0" prefWidth="150.0" />
+                              <Label layoutX="302.0" layoutY="450.0" text="Tipo:" />
+                              <Button fx:id="actualizarModificarUsuario" layoutX="917.0" layoutY="446.0" mnemonicParsing="false" text="Actualizar" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Variables del Sistema">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="342.0" layoutY="91.0" />
+                              <VBox layoutX="342.0" layoutY="241.0">
+                                 <children>
+                                    <TextField fx:id="incrementoMinimo" prefHeight="48.0" prefWidth="314.0">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <Text layoutX="307.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₡" wrappingWidth="24.796875">
+                                 <font>
+                                    <Font name="System Bold" size="46.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="variablesSistema" layoutX="411.0" layoutY="342.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="200.0" text="Guardar">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Button>
+                              <Text layoutX="342.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porcentaje de mejora">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="porcentajeMejora" layoutX="342.0" layoutY="104.0" prefHeight="48.0" prefWidth="338.0">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </TextField>
+                              <Text layoutX="342.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incremento Mínimo">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Consultas">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="1077.0">
+                           <children>
+                              <Separator layoutX="510.0" layoutY="29.0" orientation="VERTICAL" prefHeight="424.0" prefWidth="2.0" />
+                              <Label layoutX="124.0" layoutY="29.0" text="Subastas Por Categoría-SubCategoría ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tablaSubastasAdmi" layoutX="14.0" layoutY="64.0" prefHeight="200.0" prefWidth="484.0">
+                                <columns>
+                                  <TableColumn fx:id="idSubastaAdmi" prefWidth="75.0" text="ID" />
+                                  <TableColumn fx:id="vendedorSubastaAdmi" prefWidth="75.0" text="Vendedor" />
+                                    <TableColumn fx:id="precioBaseSubastaAdmi" prefWidth="75.0" text="Precio Base" />
+                                    <TableColumn fx:id="subCategoriaSubastaAdmi" prefWidth="258.0" text="SubCategoría" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="sinFiltroAdmi" layoutX="14.0" layoutY="277.0" mnemonicParsing="false" text="Sin Filtro">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="mostrarDetallesAdmi" layoutX="388.0" layoutY="277.0" mnemonicParsing="false" text="Mostrar Detalles">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="141.0" layoutY="322.0" text="Filtros">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="141.0" layoutY="355.0" text="Categoría">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="141.0" layoutY="397.0" text="SubCategoría">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="filtroCategoriaAdmi" layoutX="250.0" layoutY="353.0" prefWidth="150.0" />
+                              <ComboBox fx:id="filtroSubCategoriaAdmi" layoutX="250.0" layoutY="394.0" prefWidth="150.0" />
+                              <Button fx:id="filtrarAdmi" layoutX="230.0" layoutY="441.0" mnemonicParsing="false" text="Filtrar">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="708.0" layoutY="29.0" text="Historial de Pujas">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tablaSubastasHistorialAdmi" layoutX="524.0" layoutY="95.0" prefHeight="139.0" prefWidth="484.0">
+                                 <columns>
+                                    <TableColumn fx:id="idSubastaHistorialAdmi" prefWidth="75.0" text="ID" />
+                                    <TableColumn fx:id="vendedorSubastaHistorialAdmi" prefWidth="75.0" text="Vendedor" />
+                                    <TableColumn fx:id="precioBaseSubastaHistorialAdmi" prefWidth="75.0" text="Precio Base" />
+                                    <TableColumn fx:id="subCategoriaSubastaHistorialAdmi" prefWidth="258.0" text="SubCategoría" />
+                                 </columns>
+                              </TableView>
+                              <TableView fx:id="tablaPujasAdmi" layoutX="524.0" layoutY="275.0" prefHeight="155.0" prefWidth="484.0">
+                                 <columns>
+                                    <TableColumn fx:id="idPujasAdmi" prefWidth="75.0" text="ID" />
+                                    <TableColumn fx:id="compradorPujasAdmi" prefWidth="75.0" text="Comprador" />
+                                    <TableColumn fx:id="fechaHoraPujasAdmi" prefWidth="131.0" text="Fecha y Hora" />
+                                    <TableColumn fx:id="montoPujasAdmi" prefWidth="202.0" text="Monto Ofrecido" />
+                                 </columns>
+                              </TableView>
+                              <Label layoutX="524.0" layoutY="254.0" text="Pujas Realizadas">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="524.0" layoutY="75.0" text="Subastas">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="mostrarHistorialAdmi" layoutX="903.0" layoutY="441.0" mnemonicParsing="false" text="Mostrar Historial">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="mostrarDetallesHistorialAdmi" layoutX="898.0" layoutY="234.0" mnemonicParsing="false" text="Mostrar Detalles">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="actualizarSubastasHistorialAdmi" layoutX="797.0" layoutY="234.0" mnemonicParsing="false" text="Actualizar">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Usuarios">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Separator layoutX="510.0" layoutY="29.0" orientation="VERTICAL" prefHeight="424.0" prefWidth="2.0" />
+                              <Label layoutX="181.0" layoutY="19.0" text="Historial de Usuarios ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tablaHistorialUsuarios" layoutX="14.0" layoutY="133.0" prefHeight="200.0" prefWidth="486.0">
+                                <columns>
+                                  <TableColumn fx:id="itemHistorialUsuarios" prefWidth="142.0" text="Ítem" />
+                                  <TableColumn fx:id="precioBaseHistorialUsuarios" prefWidth="162.0" text="Precio Base" />
+                                    <TableColumn fx:id="precioFinalHistorialUsuarios" prefWidth="181.0" text="Precio Final" />
+                                </columns>
+                              </TableView>
+                              <ComboBox fx:id="aliasUsuarioHistorial" layoutX="177.0" layoutY="80.0" prefWidth="150.0" />
+                              <RadioButton fx:id="opcionVentas" layoutX="366.0" layoutY="84.0" mnemonicParsing="false" selected="true" text="Ventas">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="grupoBotones" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="opcionPujas" layoutX="366.0" layoutY="105.0" mnemonicParsing="false" text="Pujas Ganadoras" toggleGroup="$grupoBotones">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <Button fx:id="mostrarHistorialUsuariosAdmi" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" text="Mostrar Historial">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="424.0" layoutY="342.0" mnemonicParsing="false" text="Actualizar ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="736.0" layoutY="19.0" text="Comentarios">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="comentariosUsuarios" layoutX="539.0" layoutY="80.0" prefHeight="379.0" prefWidth="477.0">
+                                <columns>
+                                  <TableColumn fx:id="autorComentario" prefWidth="105.0" text="Autor" />
+                                  <TableColumn fx:id="itemComentario" prefWidth="101.0" text="ítem" />
+                                    <TableColumn fx:id="comentarioComentario" prefWidth="270.0" text="Comentario" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
