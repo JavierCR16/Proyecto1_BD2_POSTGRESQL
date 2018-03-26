@@ -39,7 +39,7 @@ public class GestorBD {
 
         try {
             Class.forName("org.postgresql.Driver");
-            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
+            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=\"PRINCIPALSCHEMA\"";
             conexion = DriverManager.getConnection(connectionUrl,"postgres","jagergato");
             estado = conexion.createStatement();
 
@@ -74,12 +74,9 @@ public class GestorBD {
 
         try {
             Class.forName("org.postgresql.Driver");
-            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
+            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema= \"PRINCIPALSCHEMA\"";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             estado = conexion.createStatement();
-            String setSearchPath = "SET SEARCH_PATH = \"PRINCIPALSCHEMA\"";
-            PreparedStatement estatutoSQL = conexion.prepareStatement(setSearchPath);
-            estatutoSQL.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +89,7 @@ public class GestorBD {
         Statement statement = null;
         try {
             Class.forName("org.postgresql.Driver");
-            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
+            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=\"PRINCIPALSCHEMA\"";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             conexion.createStatement();
             return true;
