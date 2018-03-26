@@ -77,6 +77,9 @@ public class GestorBD {
             String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             estado = conexion.createStatement();
+            String setSearchPath = "SET SEARCH_PATH = \"PRINCIPALSCHEMA\"";
+            PreparedStatement estatutoSQL = conexion.prepareStatement(setSearchPath);
+            estatutoSQL.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
