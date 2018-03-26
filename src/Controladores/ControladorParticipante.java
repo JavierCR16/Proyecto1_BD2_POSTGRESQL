@@ -480,8 +480,8 @@ public class ControladorParticipante implements Initializable {
     }
 
     public boolean fechaPujaNoValida(String idSubasta){
-        Date fechaSistema = gestorParticipante.obtenerFecha();
-        Date tiempoFinSubasta = gestorParticipante.obtenerTiempoFin(Integer.parseInt(idSubasta));
+        Timestamp fechaSistema = new Timestamp(gestorParticipante.obtenerFecha().getTime());
+        Timestamp tiempoFinSubasta = gestorParticipante.obtenerTiempoFin(Integer.parseInt(idSubasta));
 
         return fechaSistema.after(tiempoFinSubasta) ;
     }

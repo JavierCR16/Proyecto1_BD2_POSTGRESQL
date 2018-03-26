@@ -396,7 +396,7 @@ public class GestorBD {
         ArrayList<Subasta> subastas = new ArrayList<>();
         try{
             CallableStatement subastasBuenas = conexion.prepareCall(sqlSubastasBuenas);
-            subastasBuenas.setDate(1,fechaSistema);
+            subastasBuenas.setTimestamp(1,new Timestamp(fechaSistema.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
             subastasBuenas.setString(2,aliasVendedor);
             subastasBuenas.registerOutParameter(3,Types.OTHER);
 
@@ -422,7 +422,7 @@ public class GestorBD {
         ArrayList<Subasta> subastasPorCategoria = new ArrayList<>();
         try{
             CallableStatement subastasBuenasPorCategoria = conexion.prepareCall(sqlSubastasBuenasPorCategoria);
-            subastasBuenasPorCategoria.setDate(1,fechaSistema);
+            subastasBuenasPorCategoria.setTimestamp(1,new Timestamp(fechaSistema.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
             subastasBuenasPorCategoria.setString(2,aliasVendedor);
             subastasBuenasPorCategoria.setInt(3,idCategoria);
             subastasBuenasPorCategoria.setInt(4,modalidad);
@@ -448,12 +448,16 @@ public class GestorBD {
     public void pujarPuja(String aliasComprador, int idItem, BigDecimal ofertaComprador, Date fechaPuja){
        String sqlPujar = "{call \"PRINCIPALSCHEMA\".crearPuja(?,?,?,?)}";
        try{
+           conexion.setAutoCommit(true);
+
            CallableStatement pujar = conexion.prepareCall(sqlPujar);
            pujar.setString(1,aliasComprador);
            pujar.setInt(2,idItem);
            pujar.setBigDecimal(3,ofertaComprador);
-           pujar.setDate(4,fechaPuja);
+           pujar.setTimestamp(4,new Timestamp(fechaPuja.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
            pujar.executeUpdate();
+
+           conexion.setAutoCommit(false);
        }catch(SQLException e){
            invocarAlerta("El monto ingresado debe ser mayor.");
            e.printStackTrace();
@@ -498,9 +502,9 @@ public class GestorBD {
                 String descripcionItem = itemDevuelto.getString("DESCRIPCION");
                 String detallesEntrega = itemDevuelto.getString("DETALLESENTREGA");
                 String precioItem = String.valueOf(itemDevuelto.getBigDecimal("PRECIO_BASE"));
-                String tiempoInicio = fechaFormateada(itemDevuelto.getDate("TIEMPOINICIO"));
-                String tiempoFin = fechaFormateada(itemDevuelto.getDate("TIEMPOFIN"));
-                String nombreImagen = cargarImagen(itemDevuelto.getBlob("FOTO"),idItem);
+                String tiempoInicio = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOINICIO"));// TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+                String tiempoFin = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOFIN"));// TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+                String nombreImagen = cargarImagen(itemDevuelto.getBytes("FOTO"),idItem);// TODO que se extraiga bien lo de la foto
 
                 itemEncontrado = new Item(idItem,descripcionItem,detallesEntrega,nombreImagen,precioItem,tiempoInicio,tiempoFin);
             }
@@ -510,17 +514,16 @@ public class GestorBD {
         return itemEncontrado;
     }
 
-    public String fechaFormateada(Date fechaActual){
+    public String fechaFormateada(Timestamp fechaActual){
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(fechaActual);
     }
 
-    public String cargarImagen(Blob imagenData,String idItem){
+    public String cargarImagen(byte [] imagenData,String idItem){
         String nombre = "Imagenes/Item"+idItem+".jpg";
         try{
-                byte barr[]=imagenData.getBytes(1,(int)imagenData.length());
                 FileOutputStream fout = new FileOutputStream(nombre);
-                fout.write(barr);
+                fout.write(imagenData);
                 fout.close();
             }
             catch (Exception e){
@@ -545,7 +548,7 @@ public class GestorBD {
             while(pujasObtenidas.next()){
                 String idPuja = pujasObtenidas.getString("ID");
                 String comprador = pujasObtenidas.getString("ALIASCOMPRADOR");
-                String fechaHora = fechaFormateada(pujasObtenidas.getDate("FECHA_HORA"));
+                String fechaHora = fechaFormateada(pujasObtenidas.getTimestamp("FECHA_HORA")); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
                 String montoOfrecido = String.valueOf(pujasObtenidas.getBigDecimal("PRECIO_OFERTA"));
 
                 pujas.add(new Puja(idPuja,comprador,fechaHora,montoOfrecido));
@@ -654,9 +657,9 @@ public class GestorBD {
         return resultadoHistorialPujas;
     }
 
-    public java.util.Date obtenerTiempoFin(int idSubasta){
+    public Timestamp obtenerTiempoFin(int idSubasta){
         String sqlTiempoFin = "{call \"PRINCIPALSCHEMA\".obtenerTiempoFin(?,?)}";
-        java.util.Date tiempoFin = null;
+        Timestamp tiempoFin = null;
         try{
             CallableStatement ejecutarTiempoFin  = conexion.prepareCall(sqlTiempoFin);
             ejecutarTiempoFin.setInt(1,idSubasta);
@@ -666,13 +669,13 @@ public class GestorBD {
 
             ResultSet tiempoObtenido = (ResultSet)ejecutarTiempoFin.getObject(2);
             while (tiempoObtenido.next()){
-                tiempoFin = tiempoObtenido.getDate("TIEMPOFIN");
+                tiempoFin = tiempoObtenido.getTimestamp("TIEMPOFIN"); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
             }
 
             if(tiempoFin!= null) {
                 DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                 String fechaFin= formatoFecha.format(tiempoFin);
-                tiempoFin = formatoFecha.parse(fechaFin);
+                tiempoFin =new Timestamp(formatoFecha.parse(fechaFin).getTime());
 
                 System.out.println(fechaFin);
 
@@ -714,10 +717,10 @@ public class GestorBD {
     }
 
 
-    public void cargarCat() {
+    /*public void cargarCat() {
         establecerConexionSuperUsuario();
 
-        String csvFile = "C:/Users/User/Desktop/Proyecto1_BD2/categorias.csv";
+        String csvFile = "C:/Users/Javier/Desktop/Bases de Datos II/Proyectos/Proyecto 1/categorias.csv";
   //      BufferedReader reader = null;
         String [] line = null;
         String cvsSplitBy = ",";
@@ -810,6 +813,6 @@ public class GestorBD {
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
