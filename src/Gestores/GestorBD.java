@@ -186,6 +186,8 @@ public class GestorBD {
 
     public void modificarUsuario(String alias,String nuevaCedula, String nuevoNombreApellidos, String nuevaDireccion){
         try{
+            conexion.setAutoCommit(true);
+
             CallableStatement modificacionUsuario = conexion.prepareCall("{call \"PRINCIPALSCHEMA\".modificarUsuario(?,?,?,?)}");
             modificacionUsuario.setString(1,alias);
             modificacionUsuario.setString(2,nuevaCedula);
@@ -193,6 +195,8 @@ public class GestorBD {
             modificacionUsuario.setString(4,nuevaDireccion);
 
             modificacionUsuario.executeUpdate();
+
+            conexion.setAutoCommit(false);
         }catch(SQLException e){
             invocarAlerta("La nueva cedula ya existe. Intente de nuevo.");
             e.printStackTrace();
