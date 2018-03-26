@@ -14,6 +14,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../Interfaz/Login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 247, 215));
+        GestorBD gestor = new GestorBD();
+        gestor.cargarCat();
         primaryStage.show();
     }
 

@@ -77,9 +77,7 @@ public class GestorBD {
             String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema= \"PRINCIPALSCHEMA\"";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             estado = conexion.createStatement();
-
             conexion.setAutoCommit(false);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -181,6 +179,7 @@ public class GestorBD {
             invocarAlerta("El usuario o cedula seleccionados ya han sido elegidos. Intente de nuevo.");
             e.printStackTrace();
         }
+
 
     }
 
@@ -298,12 +297,14 @@ public class GestorBD {
         String procedimientoVaribles = "{call \"PRINCIPALSCHEMA\".agregarNuevasVariables(?,?,?)}";
 
         try{
+            conexion.setAutoCommit(true);
             CallableStatement agregarVariables = conexion.prepareCall(procedimientoVaribles);
             agregarVariables.setString(1,aliasAdministrador);
             agregarVariables.setBigDecimal(2,porcentajeMejora);
             agregarVariables.setBigDecimal(3,incrementoMinimo);
 
             agregarVariables.executeUpdate();
+            conexion.setAutoCommit(false);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -702,7 +703,7 @@ public class GestorBD {
         return resultadoConsulta;
     }
 
-    /*
+
     public void cargarCat() {
         establecerConexionSuperUsuario();
 
@@ -726,8 +727,8 @@ public class GestorBD {
 
                 if(cont ==1){
                     categoriaActual= line[0]; //Agarra la primer categoria
-                    String sql = "INSERT INTO CATEGORIA(DESCRIPCION) VALUES(?)";
-                    String returnCols[] = { "ID" };
+                    String sql = "INSERT INTO \"PRINCIPALSCHEMA\".CATEGORIA(DESCRIPCION) VALUES(?)";
+                    String returnCols[] = { "id" };
                     PreparedStatement caca = conexion.prepareStatement(sql, returnCols);
                     caca.setString(1,categoriaActual);
                     caca.execute();
@@ -749,8 +750,8 @@ public class GestorBD {
                     }
                     else{
                         categoriaActual= line[0];
-                        String sql2 = "INSERT INTO CATEGORIA(DESCRIPCION) VALUES(?)";
-                        String returnCols[] = { "ID" };
+                        String sql2 = "INSERT INTO \"PRINCIPALSCHEMA\".CATEGORIA(DESCRIPCION) VALUES(?)";
+                        String returnCols[] = { "id" };
                         PreparedStatement caca2 = conexion.prepareStatement(sql2, returnCols);
                         caca2.setString(1,categoriaActual);
                         caca2.execute();
@@ -786,7 +787,7 @@ public class GestorBD {
     public void  insertarSubcategoria(int idCategoria, String descripcionSub){
         if(conexion==null)
             establecerConexionSuperUsuario();
-        String s = "{call C##PRINCIPALSCHEMA.pruebaImagen(?,?)}";
+        String s = "{call \"PRINCIPALSCHEMA\".pruebaImagen(?,?)}";
 
 
         try{
@@ -800,5 +801,5 @@ public class GestorBD {
             e.printStackTrace();
         }
     }
-    */
+
 }
