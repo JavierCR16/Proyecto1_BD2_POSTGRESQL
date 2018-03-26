@@ -78,6 +78,8 @@ public class GestorBD {
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             estado = conexion.createStatement();
 
+            conexion.setAutoCommit(false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,6 +145,7 @@ public class GestorBD {
     }
 
     public void agregarNuevoUsuario(String usuario, String contrasenna, String cedula, String nombreApellidos, String direccion,ArrayList<String> telefonos,String tipoUsuario){
+
         String [] telefonosUsuario = new String[telefonos.size()];
         telefonosUsuario = telefonos.toArray(telefonosUsuario);
 
@@ -159,8 +162,8 @@ public class GestorBD {
         }
 
        try{
-
-            Array arregloTelefonos = conexion.createArrayOf("character varying",telefonosUsuario);
+           conexion.setAutoCommit(true);
+            Array arregloTelefonos = conexion.createArrayOf("varchar",telefonosUsuario);
 
 
             CallableStatement agregarUsuario = conexion.prepareCall(procedimientoAlmacenado);
@@ -172,11 +175,12 @@ public class GestorBD {
             agregarUsuario.setArray(6,arregloTelefonos);
 
             agregarUsuario.executeUpdate();
+
+           conexion.setAutoCommit(false);
         }catch(SQLException e){
             invocarAlerta("El usuario o cedula seleccionados ya han sido elegidos. Intente de nuevo.");
             e.printStackTrace();
         }
-
 
     }
 
