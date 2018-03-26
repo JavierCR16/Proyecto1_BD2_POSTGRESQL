@@ -107,10 +107,10 @@ public class GestorBD {
         switch (tablaBuscar) {
 
             case "ADMINISTRADOR":
-                sqlEntidad = "SELECT * FROM PRINCIPALSCHEMA." + tablaBuscar + " WHERE ALIASADMINISTRADOR = ?";
+                sqlEntidad = "SELECT * FROM \"PRINCIPALSCHEMA\"." + tablaBuscar + " WHERE ALIASADMINISTRADOR = ?";
                 break;
             default:
-                sqlEntidad = "SELECT * FROM PRINCIPALSCHEMA." + tablaBuscar + " WHERE ALIASPARTICIPANTE = ?";
+                sqlEntidad = "SELECT * FROM \"PRINCIPALSCHEMA\"." + tablaBuscar + " WHERE ALIASPARTICIPANTE = ?";
                 break;
         }
 

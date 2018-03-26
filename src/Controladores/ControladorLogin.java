@@ -82,9 +82,9 @@ public class ControladorLogin implements Initializable {
     public void loguearEntidad(String usuario, String contra, String nombreTabla, int width, int height) {
 
 
-        if (gestorBase.existeConexionUsuarios(usuario, contra) && gestorBase.existeEntidad(usuario, nombreTabla.toUpperCase())) {
+        if (gestorBase.existeConexionUsuarios(usuario.toLowerCase(), contra) && gestorBase.existeEntidad(usuario, nombreTabla.toUpperCase())) {
 
-            gestorBase.establecerConexionUsuario(usuario, contra);
+            gestorBase.establecerConexionUsuario(usuario.toLowerCase(), contra);
 
             abrirVentanaEntidad(nombreTabla, width, height);
         } else {
