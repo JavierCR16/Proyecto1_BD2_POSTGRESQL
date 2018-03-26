@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -241,7 +242,8 @@ public class ControladorParticipante implements Initializable {
 
                     gestorParticipante.crearSubasta(
                             participanteLogueado,
-                            new java.sql.Date(dateInicio.getTime()),
+                            new Timestamp(dateInicio.getTime()),
+                            //new java.sql.Date(dateInicio.getTime()),
                             new java.sql.Date(dateFin.getTime()),
                             descripcion,
                             imagen,
