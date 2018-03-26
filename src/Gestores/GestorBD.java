@@ -24,6 +24,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static java.sql.JDBCType.ARRAY;
+
 /**
  * Created by Javier on 2/19/2018.
  */
@@ -90,8 +92,8 @@ public class GestorBD {
         Connection connection = null;
         Statement statement = null;
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String connectionUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            Class.forName("org.postgresql.Driver");
+            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             conexion.createStatement();
             return true;
@@ -161,8 +163,8 @@ public class GestorBD {
         }
 
        try{
-            ArrayDescriptor arrDesc = ArrayDescriptor.createDescriptor("C##PRINCIPALSCHEMA.LISTATELEFONOS",conexion);
-            Array arregloTelefonos = new ARRAY(arrDesc,conexion,telefonosUsuario);
+
+            Array arregloTelefonos = conexion.createArrayOf("character varying",telefonosUsuario);
 
 
             CallableStatement agregarUsuario = conexion.prepareCall(procedimientoAlmacenado);
