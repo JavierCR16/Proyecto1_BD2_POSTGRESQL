@@ -10,10 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import oracle.jdbc.OracleTypes;
-import oracle.jdbc.driver.OracleSQLException;
-import oracle.sql.ARRAY;
-import oracle.sql.ArrayDescriptor;
 import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -207,7 +203,7 @@ public class GestorBD {
 
             retornarUsuarios.setString(1,alias);
             retornarUsuarios.setInt(2,atributo);
-            retornarUsuarios.registerOutParameter(3, OracleTypes.CURSOR);
+            retornarUsuarios.registerOutParameter(3, Types.OTHER);
 
             retornarUsuarios.executeUpdate();
             ResultSet aliasTelefonosDevueltos = (ResultSet)retornarUsuarios.getObject(3);
@@ -338,7 +334,7 @@ public class GestorBD {
 
         try{
             CallableStatement ejecutarCat = conexion.prepareCall(sqlCategorias);
-            ejecutarCat.registerOutParameter(1,OracleTypes.CURSOR);
+            ejecutarCat.registerOutParameter(1,Types.OTHER);
 
             ejecutarCat.executeUpdate();
 
@@ -360,7 +356,7 @@ public class GestorBD {
         try{
             CallableStatement filtrar = conexion.prepareCall(sqlFiltro);
             filtrar.setInt(1,idCategoria);
-            filtrar.registerOutParameter(2,OracleTypes.CURSOR);
+            filtrar.registerOutParameter(2,Types.OTHER);
             filtrar.executeUpdate();
 
             ResultSet subCategoriasObtenidas = (ResultSet) filtrar.getObject(2);
@@ -383,7 +379,7 @@ public class GestorBD {
             CallableStatement subastasBuenas = conexion.prepareCall(sqlSubastasBuenas);
             subastasBuenas.setDate(1,fechaSistema);
             subastasBuenas.setString(2,aliasVendedor);
-            subastasBuenas.registerOutParameter(3,OracleTypes.CURSOR);
+            subastasBuenas.registerOutParameter(3,Types.OTHER);
 
             subastasBuenas.executeUpdate();
 
@@ -411,7 +407,7 @@ public class GestorBD {
             subastasBuenasPorCategoria.setString(2,aliasVendedor);
             subastasBuenasPorCategoria.setInt(3,idCategoria);
             subastasBuenasPorCategoria.setInt(4,modalidad);
-            subastasBuenasPorCategoria.registerOutParameter(5,OracleTypes.CURSOR);
+            subastasBuenasPorCategoria.registerOutParameter(5,Types.OTHER);
 
             subastasBuenasPorCategoria.executeUpdate();
 
@@ -452,7 +448,7 @@ public class GestorBD {
         try{
             CallableStatement buscarIdItem = conexion.prepareCall(sqlItem);
             buscarIdItem.setInt(1,idSubasta);
-            buscarIdItem.registerOutParameter(2,OracleTypes.CURSOR);
+            buscarIdItem.registerOutParameter(2,Types.OTHER);
             buscarIdItem.executeUpdate();
 
             ResultSet idDevuelto = (ResultSet) buscarIdItem.getObject(2);
@@ -473,7 +469,7 @@ public class GestorBD {
         try{
             CallableStatement buscarItem = conexion.prepareCall(sqlItem);
             buscarItem.setInt(1,Integer.parseInt(idSubasta));
-            buscarItem.registerOutParameter(2,OracleTypes.CURSOR);
+            buscarItem.registerOutParameter(2,Types.OTHER);
             buscarItem.executeUpdate();
 
             ResultSet itemDevuelto = (ResultSet) buscarItem.getObject(2);
@@ -521,7 +517,7 @@ public class GestorBD {
         try{
             CallableStatement ejecutarPujas = conexion.prepareCall(sqlPujas);
             ejecutarPujas.setInt(1,idSubasta);
-            ejecutarPujas.registerOutParameter(2,OracleTypes.CURSOR);
+            ejecutarPujas.registerOutParameter(2,Types.OTHER);
 
             ejecutarPujas.executeUpdate();
 
@@ -547,7 +543,7 @@ public class GestorBD {
 
         try{
             CallableStatement ejecutarSubastasSin = conexion.prepareCall(sqlSubastasSinRestriccion);
-            ejecutarSubastasSin.registerOutParameter(1,OracleTypes.CURSOR);
+            ejecutarSubastasSin.registerOutParameter(1,Types.OTHER);
 
             ejecutarSubastasSin.executeUpdate();
 
@@ -589,7 +585,7 @@ public class GestorBD {
         try{
             CallableStatement ejecutarSubastasHistorial = conexion.prepareCall(sqlSubastasHistorial);
             ejecutarSubastasHistorial.setString(1,aliasUsuario);
-            ejecutarSubastasHistorial.registerOutParameter(2,OracleTypes.CURSOR);
+            ejecutarSubastasHistorial.registerOutParameter(2,Types.OTHER);
 
             ejecutarSubastasHistorial.executeUpdate();
 
@@ -618,7 +614,7 @@ public class GestorBD {
             resultadoHistorialPujas = new ArrayList<>();
             CallableStatement historialPujas = conexion.prepareCall(sqlHistorialPujas);
             historialPujas.setString(1, usuario);
-            historialPujas.registerOutParameter(2, OracleTypes.CURSOR);
+            historialPujas.registerOutParameter(2, Types.OTHER);
 
             historialPujas.executeUpdate();
 
@@ -645,7 +641,7 @@ public class GestorBD {
         try{
             CallableStatement ejecutarTiempoFin  = conexion.prepareCall(sqlTiempoFin);
             ejecutarTiempoFin.setInt(1,idSubasta);
-            ejecutarTiempoFin.registerOutParameter(2,OracleTypes.CURSOR);
+            ejecutarTiempoFin.registerOutParameter(2,Types.OTHER);
 
             ejecutarTiempoFin.executeUpdate();
 
@@ -678,7 +674,7 @@ public class GestorBD {
             CallableStatement consulta = conexion.prepareCall(sqlConsulta);
             consulta.setString(1, usuario);
             consulta.setString(2, modalidad);
-            consulta.registerOutParameter(3, OracleTypes.CURSOR);
+            consulta.registerOutParameter(3, Types.OTHER);
 
             consulta.executeUpdate();
 
