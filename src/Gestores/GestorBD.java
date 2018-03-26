@@ -197,6 +197,7 @@ public class GestorBD {
             modificacionUsuario.executeUpdate();
 
             conexion.setAutoCommit(false);
+
         }catch(SQLException e){
             invocarAlerta("La nueva cedula ya existe. Intente de nuevo.");
             e.printStackTrace();
@@ -248,13 +249,14 @@ public class GestorBD {
         String procTelefono = "{call \"PRINCIPALSCHEMA\".eliminarTelefonoUsuario(?,?)}";
 
         try{
+            conexion.setAutoCommit(true);
             CallableStatement eliminarTelefono = conexion.prepareCall(procTelefono);
             eliminarTelefono.setString(1,aliasUsuario);
             eliminarTelefono.setString(2,telefonoEliminar);
 
             eliminarTelefono.executeUpdate();
 
-
+            conexion.setAutoCommit(false);
         }catch(SQLException e){
             e.printStackTrace();
 
@@ -265,12 +267,15 @@ public class GestorBD {
         String procModificarTelefono = "{call \"PRINCIPALSCHEMA\".modificarTelefonoUsuario(?,?,?)}";
 
         try{
+            conexion.setAutoCommit(true);
             CallableStatement modificarTelefono = conexion.prepareCall(procModificarTelefono);
             modificarTelefono.setString(1,alias);
             modificarTelefono.setString(2,numeroTelefonoNuevo);
             modificarTelefono.setString(3,numeroTelefonoViejo);
 
             modificarTelefono.executeUpdate();
+
+            conexion.setAutoCommit(false);
         }catch(SQLException e){
             invocarAlerta("El nuevo telefono ya existe en la base de datos. Intente de nuevo.");
             e.printStackTrace();
@@ -280,18 +285,21 @@ public class GestorBD {
     public void agregarNuevoTelefonoUsuario(String aliasUsuario,String nuevoTelefono){
         String procNuevoTelefono = "{call \"PRINCIPALSCHEMA\".agregarNuevoTelefonoUsuario(?,?)}";
         try{
+            conexion.setAutoCommit(true);
             CallableStatement agregarTelefono = conexion.prepareCall(procNuevoTelefono);
             agregarTelefono.setString(1,aliasUsuario);
             agregarTelefono.setString(2,nuevoTelefono);
 
             agregarTelefono.executeUpdate();
 
+            conexion.setAutoCommit(false);
 
         }catch(SQLException e){
             invocarAlerta("El telefono ingresadoya existe en la base de datos. Intente de nuevo.");
             e.printStackTrace();
         }
     }
+
 
     public void agregarNuevasVariables(String aliasAdministrador, BigDecimal porcentajeMejora, BigDecimal incrementoMinimo){
 
@@ -308,6 +316,7 @@ public class GestorBD {
             e.printStackTrace();
         }
     }
+    ////Hasta aqui pishudo
 
     public void crearSubasta(String aliasVendedor, Date tiempoInicio, Date tiempoFin, String descripcionItem,
                              String nombreImagen, BigDecimal precioBase, String detallesEntrega, int idSubcategoria){ // El id del item se obtiene en el stored procedure
