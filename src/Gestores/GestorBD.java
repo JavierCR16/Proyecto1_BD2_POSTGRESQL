@@ -421,7 +421,7 @@ public class GestorBD {
         ArrayList<Subasta> subastas = new ArrayList<>();
         try{
             CallableStatement subastasBuenas = conexion.prepareCall(sqlSubastasBuenas);
-            subastasBuenas.setTimestamp(1,new Timestamp(fechaSistema.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+            subastasBuenas.setTimestamp(1,new Timestamp(fechaSistema.getTime()));
             subastasBuenas.setString(2,aliasVendedor);
             subastasBuenas.registerOutParameter(3,Types.OTHER);
 
@@ -449,7 +449,7 @@ public class GestorBD {
         ArrayList<Subasta> subastasPorCategoria = new ArrayList<>();
         try{
             CallableStatement subastasBuenasPorCategoria = conexion.prepareCall(sqlSubastasBuenasPorCategoria);
-            subastasBuenasPorCategoria.setTimestamp(1,new Timestamp(fechaSistema.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+            subastasBuenasPorCategoria.setTimestamp(1,new Timestamp(fechaSistema.getTime()));
             subastasBuenasPorCategoria.setString(2,aliasVendedor);
             subastasBuenasPorCategoria.setInt(3,idCategoria);
             subastasBuenasPorCategoria.setInt(4,modalidad);
@@ -484,7 +484,7 @@ public class GestorBD {
            pujar.setString(1,aliasComprador);
            pujar.setInt(2,idItem);
            pujar.setBigDecimal(3,ofertaComprador);
-           pujar.setTimestamp(4,fechaPuja); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+           pujar.setTimestamp(4,fechaPuja);
            pujar.executeUpdate();
 
            pujar.close();
@@ -538,9 +538,9 @@ public class GestorBD {
                 String descripcionItem = itemDevuelto.getString("DESCRIPCION");
                 String detallesEntrega = itemDevuelto.getString("DETALLESENTREGA");
                 String precioItem = String.valueOf(itemDevuelto.getBigDecimal("PRECIO_BASE"));
-                String tiempoInicio = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOINICIO"));// TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
-                String tiempoFin = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOFIN"));// TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
-                String nombreImagen = cargarImagen(itemDevuelto.getBytes("FOTO"),idItem);// TODO que se extraiga bien lo de la foto
+                String tiempoInicio = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOINICIO"));
+                String tiempoFin = fechaFormateada(itemDevuelto.getTimestamp("TIEMPOFIN"));
+                String nombreImagen = cargarImagen(itemDevuelto.getBytes("FOTO"),idItem);
 
                 itemEncontrado = new Item(idItem,descripcionItem,detallesEntrega,nombreImagen,precioItem,tiempoInicio,tiempoFin);
             }
@@ -587,7 +587,7 @@ public class GestorBD {
             while(pujasObtenidas.next()){
                 String idPuja = pujasObtenidas.getString("ID");
                 String comprador = pujasObtenidas.getString("ALIASCOMPRADOR");
-                String fechaHora = fechaFormateada(pujasObtenidas.getTimestamp("FECHA_HORA")); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+                String fechaHora = fechaFormateada(pujasObtenidas.getTimestamp("FECHA_HORA"));
                 String montoOfrecido = String.valueOf(pujasObtenidas.getBigDecimal("PRECIO_OFERTA"));
 
                 pujas.add(new Puja(idPuja,comprador,fechaHora,montoOfrecido));
@@ -719,7 +719,7 @@ public class GestorBD {
 
             ResultSet tiempoObtenido = (ResultSet)ejecutarTiempoFin.getObject(2);
             while (tiempoObtenido.next()){
-                tiempoFin = tiempoObtenido.getTimestamp("TIEMPOFIN"); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+                tiempoFin = tiempoObtenido.getTimestamp("TIEMPOFIN");
             }
 
             if(tiempoFin!= null) {
