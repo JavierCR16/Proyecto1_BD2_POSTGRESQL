@@ -319,7 +319,7 @@ public class GestorBD {
     }
     ////Hasta aqui pishudo
 
-    public void crearSubasta(String aliasVendedor, Timestamp tiempoInicio, Date tiempoFin, String descripcionItem,
+    public void crearSubasta(String aliasVendedor, Timestamp tiempoInicio, Timestamp tiempoFin, String descripcionItem,
                              String nombreImagen, BigDecimal precioBase, String detallesEntrega, int idSubcategoria){ // El id del item se obtiene en el stored procedure
 
         String subastaSQL = "{call \"PRINCIPALSCHEMA\".crearSubasta(?,?,?,?,?,?,?,?)}"; //INSERT INTO ITEM(DESCRIPCION,FOTO,PRECIO_BASE,DETALLESENTREGA,IDSUBCATEGORIA) VALUES(?,?,?,?,?);
@@ -332,7 +332,7 @@ public class GestorBD {
 
             nuevaSubasta.setString(1,aliasVendedor);
             nuevaSubasta.setTimestamp(2, tiempoInicio);
-            nuevaSubasta.setDate(3,tiempoFin);
+            nuevaSubasta.setTimestamp(3,tiempoFin);
             nuevaSubasta.setString(4,descripcionItem);
             nuevaSubasta.setBinaryStream(5,imagen,imagen.available());
 
