@@ -125,6 +125,8 @@ public class GestorBD {
                 return true;
             }
 
+            obtenerEntidad.close();
+            resultados.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -174,7 +176,12 @@ public class GestorBD {
 
             agregarUsuario.executeUpdate();
 
+            agregarUsuario.close();
+
+
            conexion.setAutoCommit(false);
+
+
         }catch(SQLException e){
             invocarAlerta("El usuario o cedula seleccionados ya han sido elegidos. Intente de nuevo.");
             e.printStackTrace();
@@ -194,6 +201,8 @@ public class GestorBD {
             modificacionUsuario.setString(4,nuevaDireccion);
 
             modificacionUsuario.executeUpdate();
+
+            modificacionUsuario.close();
 
             conexion.setAutoCommit(false);
 
@@ -238,6 +247,9 @@ public class GestorBD {
 
             }
 
+            retornarUsuarios.close();
+            aliasTelefonosDevueltos.close();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -254,6 +266,8 @@ public class GestorBD {
             eliminarTelefono.setString(2,telefonoEliminar);
 
             eliminarTelefono.executeUpdate();
+
+            eliminarTelefono.close();
 
             conexion.setAutoCommit(false);
         }catch(SQLException e){
@@ -274,6 +288,8 @@ public class GestorBD {
 
             modificarTelefono.executeUpdate();
 
+            modificarTelefono.close();
+
             conexion.setAutoCommit(false);
         }catch(SQLException e){
             invocarAlerta("El nuevo telefono ya existe en la base de datos. Intente de nuevo.");
@@ -290,6 +306,8 @@ public class GestorBD {
             agregarTelefono.setString(2,nuevoTelefono);
 
             agregarTelefono.executeUpdate();
+
+            agregarTelefono.close();
 
             conexion.setAutoCommit(false);
 
@@ -312,12 +330,14 @@ public class GestorBD {
             agregarVariables.setBigDecimal(3,incrementoMinimo);
 
             agregarVariables.executeUpdate();
+
+            agregarVariables.close();
             conexion.setAutoCommit(false);
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
-    ////Hasta aqui pishudo
+
 
     public void crearSubasta(String aliasVendedor, Timestamp tiempoInicio, Timestamp tiempoFin, String descripcionItem,
                              String nombreImagen, BigDecimal precioBase, String detallesEntrega, int idSubcategoria){ // El id del item se obtiene en el stored procedure
@@ -341,6 +361,8 @@ public class GestorBD {
             nuevaSubasta.setInt(8,idSubcategoria);
 
             nuevaSubasta.executeUpdate();
+
+            nuevaSubasta.close();
             conexion.setAutoCommit(false);
         }catch(Exception e){
             e.printStackTrace();
@@ -362,6 +384,9 @@ public class GestorBD {
 
                     categorias.add(catObtenidas.getString("ID")+"-"+catObtenidas.getString("DESCRIPCION"));
             }
+
+            ejecutarCat.close();
+            catObtenidas.close();
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -411,6 +436,8 @@ public class GestorBD {
                 subastas.add(subastaAuxiliar);
             }
 
+            subastasBuenas.close();
+            subastasDevueltas.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -439,13 +466,16 @@ public class GestorBD {
                 subastasPorCategoria.add(subastaAuxiliar);
             }
 
+            subastasBuenasPorCategoria.close();
+            subastasDevueltas.close();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
         return subastasPorCategoria;
     }
 
-    public void pujarPuja(String aliasComprador, int idItem, BigDecimal ofertaComprador, Date fechaPuja){
+    public void pujarPuja(String aliasComprador, int idItem, BigDecimal ofertaComprador, Timestamp fechaPuja){
        String sqlPujar = "{call \"PRINCIPALSCHEMA\".crearPuja(?,?,?,?)}";
        try{
            conexion.setAutoCommit(true);
@@ -454,11 +484,14 @@ public class GestorBD {
            pujar.setString(1,aliasComprador);
            pujar.setInt(2,idItem);
            pujar.setBigDecimal(3,ofertaComprador);
-           pujar.setTimestamp(4,new Timestamp(fechaPuja.getTime())); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
+           pujar.setTimestamp(4,fechaPuja); // TODO HAY QUE USAR LO DE TIMESTAMP CON FECHA Y HORA SIN ZONA HORARIA
            pujar.executeUpdate();
+
+           pujar.close();
 
            conexion.setAutoCommit(false);
        }catch(SQLException e){
+
            invocarAlerta("El monto ingresado debe ser mayor.");
            e.printStackTrace();
        }
@@ -479,6 +512,9 @@ public class GestorBD {
             while(idDevuelto.next()){
                 idItemDevuelto = Integer.parseInt(idDevuelto.getString("IDITEM"));
             }
+
+            buscarIdItem.close();
+            idDevuelto.close();
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -508,6 +544,9 @@ public class GestorBD {
 
                 itemEncontrado = new Item(idItem,descripcionItem,detallesEntrega,nombreImagen,precioItem,tiempoInicio,tiempoFin);
             }
+
+            buscarItem.close();
+            itemDevuelto.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -553,6 +592,9 @@ public class GestorBD {
 
                 pujas.add(new Puja(idPuja,comprador,fechaHora,montoOfrecido));
             }
+
+            ejecutarPujas.close();
+            pujasObtenidas.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -579,6 +621,8 @@ public class GestorBD {
                 subastasSinRestriccion.add(new Subasta(idSubasta,vendedor,precioBase,subCategoria));
             }
 
+            ejecutarSubastasSin.close();
+            subastasObtenidas.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -622,6 +666,9 @@ public class GestorBD {
 
             }
 
+            ejecutarSubastasHistorial.close();
+            tuplasSubastas.close();
+
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -651,6 +698,9 @@ public class GestorBD {
                         );
                 resultadoHistorialPujas.add(tupla);
             }
+
+            historialPujas.close();
+            pujasDevueltas.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -681,6 +731,9 @@ public class GestorBD {
 
             }
 
+            ejecutarTiempoFin.close();
+            tiempoObtenido.close();
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -709,6 +762,9 @@ public class GestorBD {
                 );
                 resultadoConsulta.add(tupla);
             }
+
+            consulta.close();
+            comentariosDevueltos.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

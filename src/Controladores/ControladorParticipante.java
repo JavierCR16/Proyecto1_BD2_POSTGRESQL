@@ -271,22 +271,19 @@ public class ControladorParticipante implements Initializable {
                     nuevaOfertaPuja.clear();
                 } else {
 
-
                     BigDecimal precioBase = new BigDecimal(subastaSeleccionada.getPrecioBase());
                     BigDecimal oferta = new BigDecimal(nuevaOfertaPuja.getText());
-
-                    //TODO validar que puja sea hecha en periodo valido
 
                     if (precioBase.compareTo(oferta) == 1) {
                         gestorParticipante.invocarAlerta("La oferta debe ser mayor al precio base");
 
                     } else {
-                        Date fechaSystem = gestorParticipante.obtenerFecha();
+                        Timestamp fechaSystem = new Timestamp(gestorParticipante.obtenerFecha().getTime());
 
 
                         int idItem = gestorParticipante.buscarIdItem(Integer.parseInt(subastaSeleccionada.getId()));
 
-                        gestorParticipante.pujarPuja(participanteLogueado, idItem, oferta, new java.sql.Date(fechaSystem.getTime()));
+                        gestorParticipante.pujarPuja(participanteLogueado, idItem, oferta, fechaSystem);
                     }
                 }
             }
