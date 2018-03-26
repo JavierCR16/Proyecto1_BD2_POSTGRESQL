@@ -151,10 +151,10 @@ public class GestorBD {
 
         switch(tipoUsuario){
             case "Administrador":
-                procedimientoAlmacenado = "{call PRINCIPALSCHEMA.crearUsuarioAdministrador (?,?,?,?,?,?)}";
+                procedimientoAlmacenado = "{call \"PRINCIPALSCHEMA\".crearUsuarioAdministrador (?,?,?,?,?,?)}";
                 break;
             case "Participante":
-                procedimientoAlmacenado = "{call PRINCIPALSCHEMA.crearUsuarioParticipante (?,?,?,?,?,?)}";
+                procedimientoAlmacenado = "{call \"PRINCIPALSCHEMA\".crearUsuarioParticipante (?,?,?,?,?,?)}";
                 break;
         }
 
@@ -182,7 +182,7 @@ public class GestorBD {
 
     public void modificarUsuario(String alias,String nuevaCedula, String nuevoNombreApellidos, String nuevaDireccion){
         try{
-            CallableStatement modificacionUsuario = conexion.prepareCall("{call PRINCIPALSCHEMA.modificarUsuario(?,?,?,?)}");
+            CallableStatement modificacionUsuario = conexion.prepareCall("{call \"PRINCIPALSCHEMA\".modificarUsuario(?,?,?,?)}");
             modificacionUsuario.setString(1,alias);
             modificacionUsuario.setString(2,nuevaCedula);
             modificacionUsuario.setString(3,nuevoNombreApellidos);
@@ -198,7 +198,7 @@ public class GestorBD {
     public ArrayList<String> devolverUsuarios(String alias,int atributo){
         ArrayList<String> aliasTelefonosUsuarios = new ArrayList<>();
         try{
-            String sqlUsuarios = "{call PRINCIPALSCHEMA.retornarUsuarios(?,?,?)}";
+            String sqlUsuarios = "{call \"PRINCIPALSCHEMA\".retornarUsuarios(?,?,?)}";
             CallableStatement retornarUsuarios = conexion.prepareCall(sqlUsuarios);
 
             retornarUsuarios.setString(1,alias);
@@ -237,7 +237,7 @@ public class GestorBD {
     }
 
     public void eliminarTelefonoUsuario(String aliasUsuario, String telefonoEliminar){
-        String procTelefono = "{call PRINCIPALSCHEMA.eliminarTelefonoUsuario(?,?)}";
+        String procTelefono = "{call \"PRINCIPALSCHEMA\".eliminarTelefonoUsuario(?,?)}";
 
         try{
             CallableStatement eliminarTelefono = conexion.prepareCall(procTelefono);
@@ -254,7 +254,7 @@ public class GestorBD {
     }
 
     public void modificarTelefonoUsuario(String alias, String numeroTelefonoNuevo, String numeroTelefonoViejo){
-        String procModificarTelefono = "{call PRINCIPALSCHEMA.modificarTelefonoUsuario(?,?,?)}";
+        String procModificarTelefono = "{call \"PRINCIPALSCHEMA\".modificarTelefonoUsuario(?,?,?)}";
 
         try{
             CallableStatement modificarTelefono = conexion.prepareCall(procModificarTelefono);
@@ -270,7 +270,7 @@ public class GestorBD {
     }
 
     public void agregarNuevoTelefonoUsuario(String aliasUsuario,String nuevoTelefono){
-        String procNuevoTelefono = "{call PRINCIPALSCHEMA.agregarNuevoTelefonoUsuario(?,?)}";
+        String procNuevoTelefono = "{call \"PRINCIPALSCHEMA\".agregarNuevoTelefonoUsuario(?,?)}";
         try{
             CallableStatement agregarTelefono = conexion.prepareCall(procNuevoTelefono);
             agregarTelefono.setString(1,aliasUsuario);
@@ -287,7 +287,7 @@ public class GestorBD {
 
     public void agregarNuevasVariables(String aliasAdministrador, BigDecimal porcentajeMejora, BigDecimal incrementoMinimo){
 
-        String procedimientoVaribles = "{call PRINCIPALSCHEMA.agregarNuevasVariables(?,?,?)}";
+        String procedimientoVaribles = "{call \"PRINCIPALSCHEMA\".agregarNuevasVariables(?,?,?)}";
 
         try{
             CallableStatement agregarVariables = conexion.prepareCall(procedimientoVaribles);
@@ -304,7 +304,7 @@ public class GestorBD {
     public void crearSubasta(String aliasVendedor, Date tiempoInicio, Date tiempoFin, String descripcionItem,
                              String nombreImagen, BigDecimal precioBase, String detallesEntrega, int idSubcategoria){ // El id del item se obtiene en el stored procedure
 
-        String subastaSQL = "{call PRINCIPALSCHEMA.crearSubasta(?,?,?,?,?,?,?,?)}"; //INSERT INTO ITEM(DESCRIPCION,FOTO,PRECIO_BASE,DETALLESENTREGA,IDSUBCATEGORIA) VALUES(?,?,?,?,?);
+        String subastaSQL = "{call \"PRINCIPALSCHEMA\".crearSubasta(?,?,?,?,?,?,?,?)}"; //INSERT INTO ITEM(DESCRIPCION,FOTO,PRECIO_BASE,DETALLESENTREGA,IDSUBCATEGORIA) VALUES(?,?,?,?,?);
         try {
             FileInputStream imagen = new FileInputStream("Imagenes/"+nombreImagen);
 
@@ -330,7 +330,7 @@ public class GestorBD {
 
     public ArrayList<String> getCategorias(){ //Con la modalidad devuelvo la categoria o subcategorias asciadas
         ArrayList<String> categorias = new ArrayList<>();
-        String sqlCategorias = "{call PRINCIPALSCHEMA.obtenerCategorias(?)}";
+        String sqlCategorias = "{call \"PRINCIPALSCHEMA\".obtenerCategorias(?)}";
 
         try{
             CallableStatement ejecutarCat = conexion.prepareCall(sqlCategorias);
@@ -352,7 +352,7 @@ public class GestorBD {
 
     public ArrayList<String> filtrarSubCategorias(int idCategoria){
         ArrayList<String> subCategorias = new ArrayList<String>();
-        String sqlFiltro = "{call PRINCIPALSCHEMA.filtrarSubCategorias(?,?)}";
+        String sqlFiltro = "{call \"PRINCIPALSCHEMA\".filtrarSubCategorias(?,?)}";
         try{
             CallableStatement filtrar = conexion.prepareCall(sqlFiltro);
             filtrar.setInt(1,idCategoria);
@@ -373,7 +373,7 @@ public class GestorBD {
     }
 
     public ArrayList<Subasta> getSubastas(Date fechaSistema, String aliasVendedor){
-        String sqlSubastasBuenas = "{call PRINCIPALSCHEMA.getSubastasValidas(?,?,?)}";
+        String sqlSubastasBuenas = "{call \"PRINCIPALSCHEMA\".getSubastasValidas(?,?,?)}";
         ArrayList<Subasta> subastas = new ArrayList<>();
         try{
             CallableStatement subastasBuenas = conexion.prepareCall(sqlSubastasBuenas);
@@ -399,7 +399,7 @@ public class GestorBD {
     }
 
     public ArrayList<Subasta> getSubastasPorCategoria(Date fechaSistema, String aliasVendedor, int idCategoria,int modalidad){
-        String sqlSubastasBuenasPorCategoria = "{call PRINCIPALSCHEMA.getSubastasPorCategoria(?,?,?,?,?)}";
+        String sqlSubastasBuenasPorCategoria = "{call \"PRINCIPALSCHEMA\".getSubastasPorCategoria(?,?,?,?,?)}";
         ArrayList<Subasta> subastasPorCategoria = new ArrayList<>();
         try{
             CallableStatement subastasBuenasPorCategoria = conexion.prepareCall(sqlSubastasBuenasPorCategoria);
@@ -427,7 +427,7 @@ public class GestorBD {
     }
 
     public void pujarPuja(String aliasComprador, int idItem, BigDecimal ofertaComprador, Date fechaPuja){
-       String sqlPujar = "{call PRINCIPALSCHEMA.crearPuja(?,?,?,?)}";
+       String sqlPujar = "{call \"PRINCIPALSCHEMA\".crearPuja(?,?,?,?)}";
        try{
            CallableStatement pujar = conexion.prepareCall(sqlPujar);
            pujar.setString(1,aliasComprador);
@@ -442,7 +442,7 @@ public class GestorBD {
     }
 
     public int buscarIdItem(int idSubasta){
-        String sqlItem = "{call PRINCIPALSCHEMA.buscarIdItem(?,?)}";
+        String sqlItem = "{call \"PRINCIPALSCHEMA\".buscarIdItem(?,?)}";
         int idItemDevuelto = 0;
 
         try{
@@ -464,7 +464,7 @@ public class GestorBD {
     }
 
     public Item extraerInformacionItem(String idSubasta){
-        String sqlItem = "{call PRINCIPALSCHEMA.extraerItem(?,?)}";
+        String sqlItem = "{call \"PRINCIPALSCHEMA\".extraerItem(?,?)}";
         Item itemEncontrado = null;
         try{
             CallableStatement buscarItem = conexion.prepareCall(sqlItem);
@@ -512,7 +512,7 @@ public class GestorBD {
 
     public ArrayList<Puja> getPujas(int idSubasta){
         ArrayList<Puja> pujas = new ArrayList<>();
-        String sqlPujas = "{call PRINCIPALSCHEMA.getPujas(?,?)}";
+        String sqlPujas = "{call \"PRINCIPALSCHEMA\".getPujas(?,?)}";
 
         try{
             CallableStatement ejecutarPujas = conexion.prepareCall(sqlPujas);
@@ -539,7 +539,7 @@ public class GestorBD {
 
     public ArrayList<Subasta> getSubastasSinRestriccion(){
         ArrayList<Subasta> subastasSinRestriccion = new ArrayList<>();
-        String sqlSubastasSinRestriccion = "{call PRINCIPALSCHEMA.getSubastasSinRestriccion(?)}";
+        String sqlSubastasSinRestriccion = "{call \"PRINCIPALSCHEMA\".getSubastasSinRestriccion(?)}";
 
         try{
             CallableStatement ejecutarSubastasSin = conexion.prepareCall(sqlSubastasSinRestriccion);
@@ -580,7 +580,7 @@ public class GestorBD {
 
     public ArrayList<ConsultasHistorial> obtenerHistorialSubastas(String aliasUsuario){
         ArrayList<ConsultasHistorial> consultasHistorial = new ArrayList<>();
-        String sqlSubastasHistorial = "{call PRINCIPALSCHEMA.obtenerHistorialSubastas(?,?)}";
+        String sqlSubastasHistorial = "{call \"PRINCIPALSCHEMA\".obtenerHistorialSubastas(?,?)}";
 
         try{
             CallableStatement ejecutarSubastasHistorial = conexion.prepareCall(sqlSubastasHistorial);
@@ -610,7 +610,7 @@ public class GestorBD {
     public ArrayList<ConsultasHistorial> obtenerHistorialPujas(String usuario){
         ArrayList<ConsultasHistorial> resultadoHistorialPujas = null;
         try {
-            String sqlHistorialPujas = "{call PRINCIPALSCHEMA.obtenerHistorialPujas(?,?)}";
+            String sqlHistorialPujas = "{call \"PRINCIPALSCHEMA\".obtenerHistorialPujas(?,?)}";
             resultadoHistorialPujas = new ArrayList<>();
             CallableStatement historialPujas = conexion.prepareCall(sqlHistorialPujas);
             historialPujas.setString(1, usuario);
@@ -636,7 +636,7 @@ public class GestorBD {
     }
 
     public java.util.Date obtenerTiempoFin(int idSubasta){
-        String sqlTiempoFin = "{call PRINCIPALSCHEMA.obtenerTiempoFin(?,?)}";
+        String sqlTiempoFin = "{call \"PRINCIPALSCHEMA\".obtenerTiempoFin(?,?)}";
         java.util.Date tiempoFin = null;
         try{
             CallableStatement ejecutarTiempoFin  = conexion.prepareCall(sqlTiempoFin);
@@ -670,7 +670,7 @@ public class GestorBD {
     public ArrayList<Comentario> obtenerComentariosSobreUsuario(String usuario, String modalidad){
         ArrayList<Comentario> resultadoConsulta = new ArrayList<>();
         try {
-            String sqlConsulta = "{call PRINCIPALSCHEMA.obtenerComentarios(?,?,?)}";
+            String sqlConsulta = "{call \"PRINCIPALSCHEMA\".obtenerComentarios(?,?,?)}";
             CallableStatement consulta = conexion.prepareCall(sqlConsulta);
             consulta.setString(1, usuario);
             consulta.setString(2, modalidad);
