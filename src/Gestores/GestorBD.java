@@ -42,7 +42,7 @@ public class GestorBD {
         try {
             Class.forName("org.postgresql.Driver");
             String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
-            conexion = DriverManager.getConnection(connectionUrl,"PRINCIPALSCHEMA","oracleBases21698");
+            conexion = DriverManager.getConnection(connectionUrl,"postgres","jagergato");
             estado = conexion.createStatement();
 
         } catch (ClassNotFoundException ex) {
@@ -75,8 +75,8 @@ public class GestorBD {
     public void establecerConexionUsuario(String username, String password) {
 
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String connectionUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            Class.forName("org.postgresql.Driver");
+            String connectionUrl = "jdbc:postgresql://127.0.0.1:5432/BaseSubastas?currentSchema=PRINCIPALSCHEMA";
             conexion = DriverManager.getConnection(connectionUrl,username,password);
             estado = conexion.createStatement();
 
