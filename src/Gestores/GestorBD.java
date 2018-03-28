@@ -162,7 +162,7 @@ public class GestorBD {
         }
 
        try{
-           conexion.setAutoCommit(true);
+            conexion.setAutoCommit(true);
             Array arregloTelefonos = conexion.createArrayOf("varchar",telefonosUsuario);
 
 
@@ -185,6 +185,7 @@ public class GestorBD {
         }catch(SQLException e){
             invocarAlerta("El usuario o cedula seleccionados ya han sido elegidos. Intente de nuevo.");
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
 
 
@@ -209,6 +210,7 @@ public class GestorBD {
         }catch(SQLException e){
             invocarAlerta("La nueva cedula ya existe. Intente de nuevo.");
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
     }
 
@@ -272,7 +274,7 @@ public class GestorBD {
             conexion.setAutoCommit(false);
         }catch(SQLException e){
             e.printStackTrace();
-
+            toggleAutoCommit(false);
         }
     }
 
@@ -294,6 +296,7 @@ public class GestorBD {
         }catch(SQLException e){
             invocarAlerta("El nuevo telefono ya existe en la base de datos. Intente de nuevo.");
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
     }
 
@@ -314,6 +317,7 @@ public class GestorBD {
         }catch(SQLException e){
             invocarAlerta("El telefono ingresadoya existe en la base de datos. Intente de nuevo.");
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
     }
 
@@ -335,6 +339,7 @@ public class GestorBD {
             conexion.setAutoCommit(false);
         }catch(SQLException e){
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
     }
 
@@ -366,6 +371,7 @@ public class GestorBD {
             conexion.setAutoCommit(false);
         }catch(Exception e){
             e.printStackTrace();
+            toggleAutoCommit(false);
         }
     }
 
@@ -491,9 +497,9 @@ public class GestorBD {
 
            conexion.setAutoCommit(false);
        }catch(SQLException e){
-
            invocarAlerta("El monto ingresado debe ser mayor.");
            e.printStackTrace();
+           toggleAutoCommit(false);
        }
     }
 
@@ -772,6 +778,13 @@ public class GestorBD {
         return resultadoConsulta;
     }
 
+    public void toggleAutoCommit(boolean valor){
+        try {
+            conexion.setAutoCommit(valor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /*public void cargarCat() {
         establecerConexionSuperUsuario();
